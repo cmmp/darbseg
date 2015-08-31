@@ -1,0 +1,5 @@
+target/
+.Rhistory
+.project
+.settings
+.classpath
