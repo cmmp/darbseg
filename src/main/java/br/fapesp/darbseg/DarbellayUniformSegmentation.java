@@ -31,12 +31,13 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 public class DarbellayUniformSegmentation {
 	
 	private static final boolean DEBUG = true;
+	private static final boolean GUIDEBUG = true;
 	
 	private static final double PCRIT = 0.99;
 	private static final ChiSquaredDistribution CD = new ChiSquaredDistribution(3);
     private static final double CRIT = CD.inverseCumulativeProbability(PCRIT);
     
-    public static int[] darbellay(double[][] data) {
+    public static int[] darbellay(double[][] data, int nbreaks) {
     	List<Integer> l = new ArrayList<Integer>();
     	for (int i = 0; i < data.length; i++)
     		l.add(i);
@@ -152,10 +153,10 @@ public class DarbellayUniformSegmentation {
     
     public static void main(String args[]) throws IOException {
     	
-//		File csvData = new File("C:/Users/Cássio/Dropbox/workspace/darbseg/resources/Y2.csv");
-    	File csvData = new File("C:/Users/Cássio/Dropbox/workspace/darbseg/resources/sample.csv"); // example given in the paper
-//    	File csvData = new File("C:/Users/Cássio/Dropbox/workspace/darbseg/resources/sample2.csv"); 
-//    	File csvData = new File("C:/Users/Cássio/Dropbox/workspace/darbseg/resources/sample3.csv");
+//		File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/Y2.csv");
+    	File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/sample.csv"); // example given in the paper
+//    	File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/sample2.csv"); 
+//    	File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/sample3.csv");
     	
         CSVParser parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.RFC4180.withDelimiter(' ').withSkipHeaderRecord().withIgnoreEmptyLines());
         
@@ -169,25 +170,7 @@ public class DarbellayUniformSegmentation {
         		data[i][j] = Double.parseDouble(r.get(j));
         }
         
-//        for(int i = 0; i < list.size(); i++)
-//        	System.out.println(Arrays.toString(data[i]));
-        
-//        List<Integer> l1 = new ArrayList<>();
-//        l1.add(1); l1.add(2);
-//        
-//        List<Integer> l2 = new ArrayList<>();
-//        l2.add(3); l2.add(4);
-//        
-//        List<List<Integer>> lists = new ArrayList<>();
-//        lists.add(l1);
-//        lists.add(l2);
-//        
-//        List<List<Integer>> lists2 = new ArrayList<>();
-//        lists2.addAll(lists);
-//        
-//        System.out.println(lists2);
-        
-        darbellay(data);
+        darbellay(data, 8);
         
     }
     
