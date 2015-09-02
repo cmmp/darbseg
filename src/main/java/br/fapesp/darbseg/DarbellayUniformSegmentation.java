@@ -173,9 +173,9 @@ public class DarbellayUniformSegmentation {
 		
 		if (GUIDEBUG) {
 			plotRegion(data.getData(), quant);
-//			Scanner scan = new Scanner(System.in);
-//			System.out.println("Press enter to continue...");
-//			String input = scan.nextLine();
+			Scanner scan = new Scanner(System.in);
+			System.out.println("Press enter to continue...");
+			String input = scan.nextLine();
 		}
 		
 		double mean = N / nchild;
@@ -213,9 +213,9 @@ public class DarbellayUniformSegmentation {
     
     public static void main(String args[]) throws IOException {
     	
-//		File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/Y2.csv"); // topology data set
+		File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/Y2.csv"); // topology data set
 //    	File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/sample.csv"); // example given in the paper
-    	File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/sample3.csv"); // gaussians
+//    	File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/sample3.csv"); // gaussians
     	
         CSVParser parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.RFC4180.withDelimiter(' ').withSkipHeaderRecord().withIgnoreEmptyLines());
         
@@ -229,7 +229,7 @@ public class DarbellayUniformSegmentation {
         		data[i][j] = Double.parseDouble(r.get(j));
         }
         
-        darbellay(data, 1, 0.99);
+        darbellay(data, 3, 0.99);
         
     }
     
@@ -249,6 +249,7 @@ public class DarbellayUniformSegmentation {
 		XYLineAndShapeRenderer xr = (XYLineAndShapeRenderer) chart.getXYPlot().getRenderer();
 		xr.setSeriesLinesVisible(0, false);
 		xr.setSeriesShapesVisible(0, true);
+		chart.removeLegend();
 		
 		frame = new ChartFrame("Plot window", chart);
 		frame.pack();
@@ -277,14 +278,14 @@ public class DarbellayUniformSegmentation {
 			
 			XYSeriesCollection set = (XYSeriesCollection) chart.getXYPlot().getDataset();
 			set.addSeries(xy1);
-//			chart.getXYPlot().getRenderer().setSeriesPaint(keyCounter, Color.yellow);
+			chart.getXYPlot().getRenderer().setSeriesPaint(keyCounter, Color.black);
 			
 			XYSeries xy2 = new XYSeries(++keyCounter);
 			xy2.add(xmin, quant[i][1]);
 			xy2.add(xmax, quant[i][1]);			
 			
 			set.addSeries(xy2);
-//			chart.getXYPlot().getRenderer().setSeriesPaint(keyCounter, Color.yellow);
+			chart.getXYPlot().getRenderer().setSeriesPaint(keyCounter, Color.black);
 			
 		}
 		

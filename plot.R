@@ -19,7 +19,8 @@ X = as.matrix(read.table("C:/Users/Cássio/workspace/darbseg/resources/Y2.csv"))
 
 darb = J("br.fapesp.darbseg.DarbellayUniformSegmentation")
 
-lbls = darb$darbellay(.jarray(X, dispatch = TRUE))
+# darbellay(X, nbreaks, pcrit)
+lbls = darb$darbellay(.jarray(X, dispatch = TRUE), as.integer(2), as.double(0.99))
 
 plot(X, col = as.factor(lbls))
 legend('bottomright', legend = unique(lbls), col = 1:length(lbls), pch = 1)
