@@ -4,9 +4,10 @@
  */
 package br.fapesp.darbseg;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -26,14 +27,8 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.IntervalMarker;
-import org.jfree.chart.plot.ValueMarker;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.renderer.xy.XYStepRenderer;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -213,9 +208,9 @@ public class DarbellayUniformSegmentation {
     
     public static void main(String args[]) throws IOException {
     	
-		File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/Y2.csv"); // topology data set
+//		File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/Y2.csv"); // topology data set
 //    	File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/sample.csv"); // example given in the paper
-//    	File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/sample3.csv"); // gaussians
+    	File csvData = new File("C:/Users/Cássio/workspace/darbseg/resources/sample3.csv"); // gaussians
     	
         CSVParser parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.RFC4180.withDelimiter(' ').withSkipHeaderRecord().withIgnoreEmptyLines());
         
@@ -229,7 +224,7 @@ public class DarbellayUniformSegmentation {
         		data[i][j] = Double.parseDouble(r.get(j));
         }
         
-        darbellay(data, 3, 0.99);
+        darbellay(data, 1, 0.99);
         
     }
     
@@ -247,6 +242,11 @@ public class DarbellayUniformSegmentation {
 		// create chart:
 		chart = ChartFactory.createXYLineChart("Plot", "x", "y", dataset);
 		XYLineAndShapeRenderer xr = (XYLineAndShapeRenderer) chart.getXYPlot().getRenderer();
+		
+		Shape circle = new Ellipse2D.Double(0, 0, 3, 3);
+		xr.setSeriesShape(0, circle);
+		
+		xr.setSeriesPaint(0, Color.blue);
 		xr.setSeriesLinesVisible(0, false);
 		xr.setSeriesShapesVisible(0, true);
 		chart.removeLegend();
